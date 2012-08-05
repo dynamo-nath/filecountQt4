@@ -1,4 +1,9 @@
-"""notes go here"""
+""" Main part of the filecount program that creates the Qt4 GUI and calls
+the relevant query from filecountQUERY. In theory it should run on Windows but the
+ \ might cause an issue in the filepath.
+ 
+N Waterman 04-Aug-2012
+"""
 
 import sys, os
 import filecountQUERY
