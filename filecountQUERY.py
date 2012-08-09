@@ -4,6 +4,22 @@ N Waterman 23-06-12
 
 import os
 
+mypath1='/home/nathan/testing1'
+
+class File_type(object):
+    mydict={}
+    def __init__(self, mytype,  mysize):
+        self.mytype=mytype
+        self.mysize=mysize
+    def create_dict(self):
+        if self.mytype in self.mydict:
+            n=self.mydict[self.mytype]+self.mysize
+            self.mydict[self.mytype]=n
+        else:
+            self.mydict[self.mytype]=self.mysize
+            n=self.mydict[self.mytype]+self.mysize
+        return(self.mydict)
+
 def ext_list_folder(direc):
     '''returns count of files & folders in direc'''
     mylist=[]
@@ -15,11 +31,13 @@ def ext_list_folder(direc):
             myfolders+=1
         else:
             mycount+=1
-            mylist.append(os.path.splitext(myfile)[1])
-    a1=count_doc_type(direc, mylist)
-#    s1=str(mycount)+" "+"file(s)"+"\n"
+            a=os.path.splitext(myfile)[1]
+            b=os.stat(mypath).st_size
+            h=File_type(a, b).create_dict()
+            mylist.append(a)
+    a1=count_doc_type(direc, mylist, h)
     s2=str(myfolders)+" "+"folder(s)"
-    z = a1 + s2
+    z = a1+s2
     return z
 
 def create_doc_type(direc):
@@ -28,13 +46,15 @@ def create_doc_type(direc):
     mylist=[]
     for root, dir, files in os.walk(direc):
         for x in range(len(files)):
-            wibble = files[x-1]
-            wibble1 = os.path.splitext(wibble)
-            mylist.append(wibble1[1])
-    y=count_doc_type(direc, mylist)
+            mypath1=os.path.join(root, files[x-1])
+            c1 = (os.path.splitext(mypath1)[1]).lower()
+            c2=os.stat(mypath1).st_size
+            h=File_type(c1, c2).create_dict()
+            mylist.append(c1)
+    y=count_doc_type(direc, mylist, h)
     return y
             
-def count_doc_type(direc, mylist):
+def count_doc_type(direc, mylist, h):
     '''sorts the list, counts each type, provides totals'''
     
     type_count=[]
@@ -43,10 +63,12 @@ def count_doc_type(direc, mylist):
     a=str('There are: '+ str(len(mylist))+ ' files in '+ direc + '\n')
     for z in range(len(mylist)):
         if z+1==len(mylist):
-            d=(mylist[z] + " " + str(mylist.count(mylist[z]))+ '\n')
+            d=(str(mylist.count(mylist[z]))+" "+ mylist[z]+"\t totalling\t"+
+                str(h[mylist[z]])+"\tbytes\n")
             type_count.append(str(d))
         elif mylist[z]!=mylist[z+1]:
-            f=(mylist[z] +" "+str(mylist.count(mylist[z]))+ '\n')
+            f=(str(mylist.count(mylist[z]))+" "+ mylist[z]+"\t totalling\t"+
+                str(h[mylist[z]])+"\tbytes\n")
             type_count.append(str(f))
     myString += a
     for z1 in range(len(type_count)):
