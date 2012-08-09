@@ -1,6 +1,6 @@
-""" Main part of the filecount program that creates the Qt4 GUI and calls
-the relevant query from filecountQUERY. In theory it should run on Windows but the
- \ might cause an issue in the filepath.
+""" Main part of the filecount program that creates the Qt4 GUI and 
+calls the relevant query from filecountQUERY. In theory it should run on
+Windows but the \ might cause an issue in the filepath.
  
 N Waterman 04-Aug-2012
 """
@@ -18,8 +18,10 @@ class makeGUI(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self, parent)
         self.ui=Ui_MainWindow()
         self.ui.setupUi(self)
-        QtCore.QObject.connect(self.ui.pbMakeList, QtCore.SIGNAL('clicked()'), self.search_path)
-        QtCore.QObject.connect(self.ui.pbResults, QtCore.SIGNAL('clicked()'), self.call_filecount)
+        QtCore.QObject.connect(self.ui.pbMakeList, 
+                        QtCore.SIGNAL('clicked()'), self.search_path)
+        QtCore.QObject.connect(self.ui.pbResults, 
+                        QtCore.SIGNAL('clicked()'), self.call_filecount)
         
     def search_path(self):
         '''sets list of values for combobox'''
